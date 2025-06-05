@@ -1,5 +1,5 @@
 // app/racas/[raca]/page.tsx
-/* eslint-disable @typescript-eslint/no-explicit-any */ // <-- Manter esta linha
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Image, Button, Card, CardBody } from '@nextui-org/react';
 import Link from 'next/link';
@@ -10,7 +10,8 @@ interface DogImagesByBreed {
   status: string;
 }
 
-// REMOVA ESTE BLOCO COMPLETO:
+// Manter a interface RouteParams é opcional, mas ajuda na clareza do código.
+// A tipagem 'any' nas funções vai sobrescrevê-la para o compilador.
 // interface RouteParams {
 //   raca: string;
 // }
@@ -53,7 +54,7 @@ export default async function BreedPage({ params }: any) {
   return (
     <div className="container mx-auto p-8 max-w-7xl">
       <Link href="/" passHref>
-        <Button auto color="secondary" className="mb-6">
+        <Button color="secondary" className="mb-6"> {/* REMOVIDO: auto */}
           Voltar para as Raças
         </Button>
       </Link>
