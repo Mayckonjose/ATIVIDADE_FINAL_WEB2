@@ -1,25 +1,18 @@
 // app/racas/[raca]/page.tsx
-import { Image, Button, Card, CardBody } from '@nextui-org/react'; // Adicionado Card e CardBody
+import { Image, Button, Card, CardBody } from '@nextui-org/react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation'; // Para lidar com raças não encontradas
+import { notFound } from 'next/navigation';
 
 interface DogImagesByBreed {
   message: string[]; // Array de URLs de imagens
   status: string;
 }
 
-interface BreedPageProps {
-  params: {
-    raca: string; // O nome da raça virá como string
-  };
-}
-
 async function getDogImagesByBreed(breed: string): Promise<string[]> {
   const res = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
   if (!res.ok) {
-    // Se a raça não for encontrada ou houver outro erro na API
     if (res.status === 404) {
-      notFound(); // Ativa o not-found.tsx (se você o tiver)
+      notFound();
     }
     throw new Error(`Falha ao buscar imagens para a raça: ${breed}`);
   }
@@ -28,17 +21,18 @@ async function getDogImagesByBreed(breed: string): Promise<string[]> {
 }
 
 // Metadata dinâmica para a página de raça específica
-export async function generateMetadata({ params }: BreedPageProps) {
-  const breedName = params.raca.replace(/-/g, ' '); // Formata para exibir no título
+// Ajuste na tipagem de `params`
+export async function generateMetadata({ params }: { params: { raca: string } }) {
+  const breedName = params.raca.replace(/-/g, ' ');
   return {
     title: `Fotos de ${breedName.charAt(0).toUpperCase() + breedName.slice(1)} - Dog Viewer`,
     description: `Veja diversas fotos da raça de cães ${breedName}.`,
   };
 }
 
-export default async function BreedPage({ params }: BreedPageProps) {
+// Ajuste na tipagem de `params`
+export default async function BreedPage({ params }: { params: { raca: string } }) {
   const breedImages = await getDogImagesByBreed(params.raca);
-  // Formata o nome da raça para exibição (ex: "golden-retriever" para "Golden Retriever")
   const formattedBreedName = params.raca.replace(/-/g, ' ').charAt(0).toUpperCase() + params.raca.replace(/-/g, ' ').slice(1);
 
   if (breedImages.length === 0) {
@@ -63,13 +57,9 @@ export default async function BreedPage({ params }: BreedPageProps) {
       <h1 className="text-3xl font-bold mb-6 text-center">Imagens de {formattedBreedName}</h1>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {/* Limita a 20 imagens para não sobrecarregar a página */}
         {breedImages.slice(0, 20).map((imageUrl, index) => (
           <Card key={index} className="py-4 w-full h-72">
             <CardBody className="overflow-hidden p-0 flex justify-center items-center">
-              {/* O componente Image do NextUI é ótimo para otimização, mas a Dog API
-                  fornece URLs diretas, então a tag <img> ou o componente Image
-                  do NextUI funcionarão bem. Certifique-se de que o src esteja correto. */}
               <Image
                 alt={`${formattedBreedName} ${index + 1}`}
                 className="object-cover w-full h-full"

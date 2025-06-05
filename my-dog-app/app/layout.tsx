@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className="light"> {/* Pode ser "dark" ou "light" dependendo do seu tema padrão */}
+    <html lang="pt-BR" className="light"> 
       <body className={inter.className}>
         <Providers> {/* Envolve toda a sua aplicação com o provedor do NextUI */}
           <AppNavbar /> {/* Seu componente de navegação global */}
