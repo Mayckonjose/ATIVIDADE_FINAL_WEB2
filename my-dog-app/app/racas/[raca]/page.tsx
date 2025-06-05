@@ -1,5 +1,5 @@
 // app/racas/[raca]/page.tsx
-import { Image, Button, Chip, Card, CardBody } from '@nextui-org/react'; // Adicionado Card e CardBody
+import { Image, Button, Card, CardBody } from '@nextui-org/react'; // Adicionado Card e CardBody
 import Link from 'next/link';
 import { notFound } from 'next/navigation'; // Para lidar com raças não encontradas
 

@@ -1,5 +1,5 @@
 // app/page.tsx
-import { Card, CardHeader, CardBody, Divider, Button } from '@nextui-org/react';
+import { Card, CardHeader, CardBody, Divider, } from '@nextui-org/react';
 import Link from 'next/link';
 
 interface BreedsList {
