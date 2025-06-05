@@ -8,10 +8,10 @@ interface DogImagesByBreed {
   status: string;
 }
 
-// Removemos a interface RouteParams pois vamos usar 'any' diretamente nos parâmetros das funções.
-// interface RouteParams {
-//   raca: string;
-// }
+// Interface para os parâmetros de rota, como era antes
+interface RouteParams {
+  raca: string;
+}
 
 async function getDogImagesByBreed(breed: string): Promise<string[]> {
   const res = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
@@ -25,9 +25,8 @@ async function getDogImagesByBreed(breed: string): Promise<string[]> {
   return data.message;
 }
 
-// Metadata dinâmica para a página de raça específica
-// A tipagem de `params` é feita com 'any' aqui para contornar o erro.
-export async function generateMetadata({ params }: any) { // Mudança aqui: { params }: any
+// Metadata dinâmica: Tipagem explícita para params
+export async function generateMetadata({ params }: { params: RouteParams }) { // <<-- Mudança aqui
   const breedName = params.raca.replace(/-/g, ' ');
   return {
     title: `Fotos de ${breedName.charAt(0).toUpperCase() + breedName.slice(1)} - Dog Viewer`,
@@ -35,8 +34,8 @@ export async function generateMetadata({ params }: any) { // Mudança aqui: { pa
   };
 }
 
-// Para o componente da página, também tipificamos as props com 'any'.
-export default async function BreedPage({ params }: any) { // Mudança aqui: { params }: any
+// Componente da página: Tipagem explícita para params
+export default async function BreedPage({ params }: { params: RouteParams }) { // <<-- Mudança aqui
   const breedImages = await getDogImagesByBreed(params.raca);
   const formattedBreedName = params.raca.replace(/-/g, ' ').charAt(0).toUpperCase() + params.raca.replace(/-/g, ' ').slice(1);
 
