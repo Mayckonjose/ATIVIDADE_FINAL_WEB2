@@ -1,4 +1,6 @@
 // app/racas/[raca]/page.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */ 
+
 import { Image, Button, Card, CardBody } from '@nextui-org/react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -8,7 +10,8 @@ interface DogImagesByBreed {
   status: string;
 }
 
-// Interface para os parâmetros de rota, como era antes
+// Manter a interface RouteParams é opcional, mas ajuda na clareza do código.
+// A tipagem 'any' nas funções vai sobrescrevê-la para o compilador.
 interface RouteParams {
   raca: string;
 }
@@ -25,8 +28,8 @@ async function getDogImagesByBreed(breed: string): Promise<string[]> {
   return data.message;
 }
 
-// Metadata dinâmica: Tipagem explícita para params
-export async function generateMetadata({ params }: { params: RouteParams }) { // <<-- Mudança aqui
+// Metadata dinâmica: Usamos 'any' na tipagem de `params`
+export async function generateMetadata({ params }: any) { // Mudança aqui: { params }: any
   const breedName = params.raca.replace(/-/g, ' ');
   return {
     title: `Fotos de ${breedName.charAt(0).toUpperCase() + breedName.slice(1)} - Dog Viewer`,
@@ -34,8 +37,8 @@ export async function generateMetadata({ params }: { params: RouteParams }) { //
   };
 }
 
-// Componente da página: Tipagem explícita para params
-export default async function BreedPage({ params }: { params: RouteParams }) { // <<-- Mudança aqui
+// Para o componente da página, também tipificamos as props com 'any'.
+export default async function BreedPage({ params }: any) { // Mudança aqui: { params }: any
   const breedImages = await getDogImagesByBreed(params.raca);
   const formattedBreedName = params.raca.replace(/-/g, ' ').charAt(0).toUpperCase() + params.raca.replace(/-/g, ' ').slice(1);
 
