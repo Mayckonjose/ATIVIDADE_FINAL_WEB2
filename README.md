@@ -1,7 +1,7 @@
-# Projeto: {Nome do seu Projeto} com Next.js + NextUI
+# Projeto: Dog Gallery com Next.js + NextUI
 
 ## Descrição
-Breve descrição do funcionamento da aplicação
+Dog Gallery é uma aplicação web moderna e responsiva que permite aos usuários explorar uma vasta coleção de raças de cães e visualizar suas respectivas imagens. Desenvolvida com Next.js, NextUI e Tailwind CSS, a aplicação consome a Dog API para apresentar um catálogo dinâmico de raças caninas, oferecendo uma experiência de navegação fluida e visualmente agradável.
 
 ## Tecnologias
 - Next.js (App Router)
@@ -10,9 +10,23 @@ Breve descrição do funcionamento da aplicação
 - NextUI (HeroUI)
 
 ## Como rodar
-npm install  
-npm run dev
+Para configurar e executar o projeto localmente, siga estes passos:
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/Mayckonjose/ATIVIDADE_FINAL_WEB2](https://github.com/Mayckonjose/ATIVIDADE_FINAL_WEB2)
+    cd ATIVIDADE_FINAL_WEB2
+    ```
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
+3.  **Inicie o servidor de desenvolvimento:**
+    ```bash
+    npm run dev
+    ```
+    A aplicação estará acessível em `http://localhost:3000`.
 
 ## Links
-- [Deploy na Vercel](https://...)
-- [Repositório GitHub](https://...)
+- [Deploy na Vercel](https://atividade-final-web-2.vercel.app/)
+- [Repositório GitHub](https://github.com/Mayckonjose/ATIVIDADE_FINAL_WEB2)
