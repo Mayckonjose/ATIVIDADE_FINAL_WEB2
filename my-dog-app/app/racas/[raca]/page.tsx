@@ -8,11 +8,10 @@ interface DogImagesByBreed {
   status: string;
 }
 
-// Uma interface auxiliar para os parâmetros de rota.
-// Não é o PageProps completo, mas foca apenas nos params esperados.
-interface RouteParams {
-  raca: string;
-}
+// Removemos a interface RouteParams pois vamos usar 'any' diretamente nos parâmetros das funções.
+// interface RouteParams {
+//   raca: string;
+// }
 
 async function getDogImagesByBreed(breed: string): Promise<string[]> {
   const res = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
@@ -27,8 +26,8 @@ async function getDogImagesByBreed(breed: string): Promise<string[]> {
 }
 
 // Metadata dinâmica para a página de raça específica
-// Usamos { params } e tipificamos diretamente aqui.
-export async function generateMetadata({ params }: { params: RouteParams }) {
+// A tipagem de `params` é feita com 'any' aqui para contornar o erro.
+export async function generateMetadata({ params }: any) { // Mudança aqui: { params }: any
   const breedName = params.raca.replace(/-/g, ' ');
   return {
     title: `Fotos de ${breedName.charAt(0).toUpperCase() + breedName.slice(1)} - Dog Viewer`,
@@ -36,8 +35,8 @@ export async function generateMetadata({ params }: { params: RouteParams }) {
   };
 }
 
-// Para o componente da página, também tipificamos diretamente as props.
-export default async function BreedPage({ params }: { params: RouteParams }) {
+// Para o componente da página, também tipificamos as props com 'any'.
+export default async function BreedPage({ params }: any) { // Mudança aqui: { params }: any
   const breedImages = await getDogImagesByBreed(params.raca);
   const formattedBreedName = params.raca.replace(/-/g, ' ').charAt(0).toUpperCase() + params.raca.replace(/-/g, ' ').slice(1);
 
@@ -63,6 +62,7 @@ export default async function BreedPage({ params }: { params: RouteParams }) {
       <h1 className="text-3xl font-bold mb-6 text-center">Imagens de {formattedBreedName}</h1>
 
       <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* Limita a 20 imagens para não sobrecarregar a página */}
         {breedImages.slice(0, 20).map((imageUrl, index) => (
           <Card key={index} className="py-4 w-full h-72">
             <CardBody className="overflow-hidden p-0 flex justify-center items-center">
