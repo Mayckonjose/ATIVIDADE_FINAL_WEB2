@@ -8,6 +8,12 @@ interface DogImagesByBreed {
   status: string;
 }
 
+// Uma interface auxiliar para os parâmetros de rota.
+// Não é o PageProps completo, mas foca apenas nos params esperados.
+interface RouteParams {
+  raca: string;
+}
+
 async function getDogImagesByBreed(breed: string): Promise<string[]> {
   const res = await fetch(`https://dog.ceo/api/breed/${breed}/images`);
   if (!res.ok) {
@@ -21,8 +27,8 @@ async function getDogImagesByBreed(breed: string): Promise<string[]> {
 }
 
 // Metadata dinâmica para a página de raça específica
-// Ajuste na tipagem de `params`
-export async function generateMetadata({ params }: { params: { raca: string } }) {
+// Usamos { params } e tipificamos diretamente aqui.
+export async function generateMetadata({ params }: { params: RouteParams }) {
   const breedName = params.raca.replace(/-/g, ' ');
   return {
     title: `Fotos de ${breedName.charAt(0).toUpperCase() + breedName.slice(1)} - Dog Viewer`,
@@ -30,8 +36,8 @@ export async function generateMetadata({ params }: { params: { raca: string } })
   };
 }
 
-// Ajuste na tipagem de `params`
-export default async function BreedPage({ params }: { params: { raca: string } }) {
+// Para o componente da página, também tipificamos diretamente as props.
+export default async function BreedPage({ params }: { params: RouteParams }) {
   const breedImages = await getDogImagesByBreed(params.raca);
   const formattedBreedName = params.raca.replace(/-/g, ' ').charAt(0).toUpperCase() + params.raca.replace(/-/g, ' ').slice(1);
 
